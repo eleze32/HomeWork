@@ -1,0 +1,482 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HomeWorkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="contraseña">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="detalle" Type="varchar" MaxLength="100" />
+          <Property Name="usuario" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="recordatorio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="hora" Type="time" Precision="0" />
+          <Property Name="fecha" Type="date" />
+          <Property Name="detalle" Type="varchar" MaxLength="100" />
+          <Property Name="usuario" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="simple">
+          <Key>
+            <PropertyRef Name="id_recordatorio" />
+          </Key>
+          <Property Name="id_recordatorio" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="tarea">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tareaPerteneceUsuario">
+          <Key>
+            <PropertyRef Name="id_tarea" />
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_tarea" Type="int" Nullable="false" />
+          <Property Name="id_usuario" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tipoUsuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TurnoMedico">
+          <Key>
+            <PropertyRef Name="id_recordatorio" />
+          </Key>
+          <Property Name="id_recordatorio" Type="int" Nullable="false" />
+          <Property Name="especialidad" Type="varchar" MaxLength="15" />
+          <Property Name="medico" Type="varchar" MaxLength="30" />
+          <Property Name="establecimiento" Type="varchar" MaxLength="20" />
+          <Property Name="direccion" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="apellido" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="numCelular" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="contrasenia" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="tipoUsuario" Type="int" />
+        </EntityType>
+        <Association Name="FK_id_tarea">
+          <End Role="tarea" Type="Self.tarea" Multiplicity="1" />
+          <End Role="tareaPerteneceUsuario" Type="Self.tareaPerteneceUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tarea">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tareaPerteneceUsuario">
+              <PropertyRef Name="id_tarea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_id_usuario">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="tareaPerteneceUsuario" Type="Self.tareaPerteneceUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tareaPerteneceUsuario">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordatorioSimple">
+          <End Role="recordatorio" Type="Self.recordatorio" Multiplicity="1" />
+          <End Role="simple" Type="Self.simple" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="recordatorio">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="simple">
+              <PropertyRef Name="id_recordatorio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordatorioTUrnoMEdico">
+          <End Role="recordatorio" Type="Self.recordatorio" Multiplicity="1" />
+          <End Role="TurnoMedico" Type="Self.TurnoMedico" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="recordatorio">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TurnoMedico">
+              <PropertyRef Name="id_recordatorio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario">
+          <End Role="tipoUsuario" Type="Self.tipoUsuario" Multiplicity="0..1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipoUsuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="tipoUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario_contraseña">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="contraseña" Type="Self.contraseña" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="contraseña">
+              <PropertyRef Name="usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario_recordatorio">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="recordatorio" Type="Self.recordatorio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="recordatorio">
+              <PropertyRef Name="usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HomeWorkModelStoreContainer">
+          <EntitySet Name="contraseña" EntityType="Self.contraseña" Schema="hw" store:Type="Tables" />
+          <EntitySet Name="recordatorio" EntityType="Self.recordatorio" Schema="hw" store:Type="Tables" />
+          <EntitySet Name="simple" EntityType="Self.simple" Schema="hw" store:Type="Tables" />
+          <EntitySet Name="tarea" EntityType="Self.tarea" Schema="hw" store:Type="Tables" />
+          <EntitySet Name="tareaPerteneceUsuario" EntityType="Self.tareaPerteneceUsuario" Schema="hw" store:Type="Tables" />
+          <EntitySet Name="tipoUsuario" EntityType="Self.tipoUsuario" Schema="hw" store:Type="Tables" />
+          <EntitySet Name="TurnoMedico" EntityType="Self.TurnoMedico" Schema="hw" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="hw" store:Type="Tables" />
+          <AssociationSet Name="FK_id_tarea" Association="Self.FK_id_tarea">
+            <End Role="tarea" EntitySet="tarea" />
+            <End Role="tareaPerteneceUsuario" EntitySet="tareaPerteneceUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_id_usuario" Association="Self.FK_id_usuario">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="tareaPerteneceUsuario" EntitySet="tareaPerteneceUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordatorioSimple" Association="Self.FK_RecordatorioSimple">
+            <End Role="recordatorio" EntitySet="recordatorio" />
+            <End Role="simple" EntitySet="simple" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordatorioTUrnoMEdico" Association="Self.FK_RecordatorioTUrnoMEdico">
+            <End Role="recordatorio" EntitySet="recordatorio" />
+            <End Role="TurnoMedico" EntitySet="TurnoMedico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario" Association="Self.FK_Usuario">
+            <End Role="tipoUsuario" EntitySet="tipoUsuario" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario_contraseña" Association="Self.FK_usuario_contraseña">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="contraseña" EntitySet="contraseña" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario_recordatorio" Association="Self.FK_usuario_recordatorio">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="recordatorio" EntitySet="recordatorio" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HomeWorkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="contraseña">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="detalle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="usuario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="usuario1" Relationship="Self.FK_usuario_contraseña" FromRole="contraseña" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="recordatorio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="hora" Type="Time" Precision="0" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <Property Name="detalle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="usuario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="simple" Relationship="Self.FK_RecordatorioSimple" FromRole="recordatorio" ToRole="simple" />
+          <NavigationProperty Name="TurnoMedico" Relationship="Self.FK_RecordatorioTUrnoMEdico" FromRole="recordatorio" ToRole="TurnoMedico" />
+          <NavigationProperty Name="usuario1" Relationship="Self.FK_usuario_recordatorio" FromRole="recordatorio" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="simple">
+          <Key>
+            <PropertyRef Name="id_recordatorio" />
+          </Key>
+          <Property Name="id_recordatorio" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="recordatorio" Relationship="Self.FK_RecordatorioSimple" FromRole="simple" ToRole="recordatorio" />
+        </EntityType>
+        <EntityType Name="tarea">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="usuario" Relationship="Self.tareaPerteneceUsuario" FromRole="tarea" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="tipoUsuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="usuario" Relationship="Self.FK_Usuario" FromRole="tipoUsuario" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="TurnoMedico">
+          <Key>
+            <PropertyRef Name="id_recordatorio" />
+          </Key>
+          <Property Name="id_recordatorio" Type="Int32" Nullable="false" />
+          <Property Name="especialidad" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="medico" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="establecimiento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="recordatorio" Relationship="Self.FK_RecordatorioTUrnoMEdico" FromRole="TurnoMedico" ToRole="recordatorio" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellido" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="numCelular" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contrasenia" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tipoUsuario" Type="Int32" />
+          <NavigationProperty Name="contraseña" Relationship="Self.FK_usuario_contraseña" FromRole="usuario" ToRole="contraseña" />
+          <NavigationProperty Name="recordatorio" Relationship="Self.FK_usuario_recordatorio" FromRole="usuario" ToRole="recordatorio" />
+          <NavigationProperty Name="tipoUsuario1" Relationship="Self.FK_Usuario" FromRole="usuario" ToRole="tipoUsuario" />
+          <NavigationProperty Name="tarea" Relationship="Self.tareaPerteneceUsuario" FromRole="usuario" ToRole="tarea" />
+        </EntityType>
+        <Association Name="FK_usuario_contraseña">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="contraseña" Type="Self.contraseña" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="contraseña">
+              <PropertyRef Name="usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordatorioSimple">
+          <End Role="recordatorio" Type="Self.recordatorio" Multiplicity="1" />
+          <End Role="simple" Type="Self.simple" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="recordatorio">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="simple">
+              <PropertyRef Name="id_recordatorio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordatorioTUrnoMEdico">
+          <End Role="recordatorio" Type="Self.recordatorio" Multiplicity="1" />
+          <End Role="TurnoMedico" Type="Self.TurnoMedico" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="recordatorio">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TurnoMedico">
+              <PropertyRef Name="id_recordatorio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario_recordatorio">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="recordatorio" Type="Self.recordatorio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="recordatorio">
+              <PropertyRef Name="usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario">
+          <End Role="tipoUsuario" Type="Self.tipoUsuario" Multiplicity="0..1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipoUsuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="tipoUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tareaPerteneceUsuario">
+          <End Role="tarea" Type="Self.tarea" Multiplicity="*" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="EntitiesDbContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="contraseña" EntityType="Self.contraseña" />
+          <EntitySet Name="recordatorio" EntityType="Self.recordatorio" />
+          <EntitySet Name="simple" EntityType="Self.simple" />
+          <EntitySet Name="tarea" EntityType="Self.tarea" />
+          <EntitySet Name="tipoUsuario" EntityType="Self.tipoUsuario" />
+          <EntitySet Name="TurnoMedico" EntityType="Self.TurnoMedico" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" />
+          <AssociationSet Name="FK_usuario_contraseña" Association="Self.FK_usuario_contraseña">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="contraseña" EntitySet="contraseña" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordatorioSimple" Association="Self.FK_RecordatorioSimple">
+            <End Role="recordatorio" EntitySet="recordatorio" />
+            <End Role="simple" EntitySet="simple" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordatorioTUrnoMEdico" Association="Self.FK_RecordatorioTUrnoMEdico">
+            <End Role="recordatorio" EntitySet="recordatorio" />
+            <End Role="TurnoMedico" EntitySet="TurnoMedico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario_recordatorio" Association="Self.FK_usuario_recordatorio">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="recordatorio" EntitySet="recordatorio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario" Association="Self.FK_Usuario">
+            <End Role="tipoUsuario" EntitySet="tipoUsuario" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="tareaPerteneceUsuario" Association="Self.tareaPerteneceUsuario">
+            <End Role="tarea" EntitySet="tarea" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HomeWorkModelStoreContainer" CdmEntityContainer="EntitiesDbContext">
+          <EntitySetMapping Name="contraseña">
+            <EntityTypeMapping TypeName="HomeWorkModel.contraseña">
+              <MappingFragment StoreEntitySet="contraseña">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="detalle" ColumnName="detalle" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="recordatorio">
+            <EntityTypeMapping TypeName="HomeWorkModel.recordatorio">
+              <MappingFragment StoreEntitySet="recordatorio">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="hora" ColumnName="hora" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="detalle" ColumnName="detalle" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="simple">
+            <EntityTypeMapping TypeName="HomeWorkModel.simple">
+              <MappingFragment StoreEntitySet="simple">
+                <ScalarProperty Name="id_recordatorio" ColumnName="id_recordatorio" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tarea">
+            <EntityTypeMapping TypeName="HomeWorkModel.tarea">
+              <MappingFragment StoreEntitySet="tarea">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipoUsuario">
+            <EntityTypeMapping TypeName="HomeWorkModel.tipoUsuario">
+              <MappingFragment StoreEntitySet="tipoUsuario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TurnoMedico">
+            <EntityTypeMapping TypeName="HomeWorkModel.TurnoMedico">
+              <MappingFragment StoreEntitySet="TurnoMedico">
+                <ScalarProperty Name="id_recordatorio" ColumnName="id_recordatorio" />
+                <ScalarProperty Name="especialidad" ColumnName="especialidad" />
+                <ScalarProperty Name="medico" ColumnName="medico" />
+                <ScalarProperty Name="establecimiento" ColumnName="establecimiento" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="HomeWorkModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="numCelular" ColumnName="numCelular" />
+                <ScalarProperty Name="contrasenia" ColumnName="contrasenia" />
+                <ScalarProperty Name="tipoUsuario" ColumnName="tipoUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="tareaPerteneceUsuario" TypeName="HomeWorkModel.tareaPerteneceUsuario" StoreEntitySet="tareaPerteneceUsuario">
+            <EndProperty Name="tarea">
+              <ScalarProperty Name="id" ColumnName="id_tarea" />
+            </EndProperty>
+            <EndProperty Name="usuario">
+              <ScalarProperty Name="id" ColumnName="id_usuario" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
