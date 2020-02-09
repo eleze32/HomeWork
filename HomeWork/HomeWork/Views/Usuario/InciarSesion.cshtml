@@ -1,0 +1,23 @@
+﻿@model Datos.usuario
+
+@{
+    ViewBag.Title = "InciarSesion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row" id="IniciarSesion">
+    <div class="col-sm-12">
+        <div class="row">
+            <img src="~/Content/img/IsologoBlanco.png"/>
+        </div>
+        <div class="row">
+            @Html.BeginForm("InciarSesion", "Usuario", FormMethod.Post, new { @class = "form-horizontal" }){
+                @Html.TextBoxFor(x => x.email, new { @class = "form-control", placeholder = "Ingresar Mail" })
+                @Html.TextBoxFor(x => x.contrasenia, new { @class = "form-control", placeholder = "Ingresar Contraseña" })
+            }
+        </div>
+    </div>
+</div>
+<h2>InciarSesion</h2>
+
