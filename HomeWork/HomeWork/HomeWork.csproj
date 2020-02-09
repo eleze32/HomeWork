@@ -127,10 +127,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\app.css" />
     <Content Include="Content\css\bootstrap\bootstrap.css" />
     <Content Include="Content\css\bootstrap\bootstrap.min.css" />
-    <Content Include="Content\css\DataTable\datatables.js" />
-    <Content Include="Content\css\DataTable\datatables.min.js" />
+    <Content Include="Content\js\DataTable\datatables.js" />
+    <Content Include="Content\js\DataTable\datatables.min.js" />
     <Content Include="Content\css\SweetAlert2\sweetalert2.css" />
     <Content Include="Content\css\SweetAlert2\sweetalert2.min.css" />
     <Content Include="Content\font\fontawesome-free-5.12.0-web\css\all.css" />
@@ -1728,8 +1729,8 @@
     <Content Include="Content\img\IsologoBlanco.png" />
     <Content Include="Content\js\bootstrap\bootstrap.js" />
     <Content Include="Content\js\bootstrap\bootstrap.min.js" />
-    <Content Include="Content\js\DataTable\datatables.css" />
-    <Content Include="Content\js\DataTable\datatables.min.css" />
+    <Content Include="Content\css\DataTable\datatables.css" />
+    <Content Include="Content\css\DataTable\datatables.min.css" />
     <Content Include="Content\js\jquerry\jquery-3.4.1.js" />
     <Content Include="Content\js\jquerry\jquery-3.4.1.min.js" />
     <Content Include="Content\js\jquerry\jquery-3.4.1.slim.js" />
@@ -1769,14 +1770,24 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Usuario\InciarSesion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Usuario\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Datos\Datos.csproj">
+      <Project>{2d62059b-35e5-4964-b3f0-b639e7a29849}</Project>
+      <Name>Datos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Negocio\Negocio.csproj">
+      <Project>{b7ad3b63-468e-4aee-a448-bc27a855e78f}</Project>
+      <Name>Negocio</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

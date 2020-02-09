@@ -9,22 +9,37 @@ namespace HomeWork
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Content/js/jquerry/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                        "~/Content/js/jquerry/jquery.validate*"));
 
-            // Utilice la versión de desarrollo de Modernizr para desarrollar y obtener información. De este modo, estará
-            // para la producción, use la herramienta de compilación disponible en https://modernizr.com para seleccionar solo las pruebas que necesite.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+            bundles.Add(new ScriptBundle("~/bundles/SweetAlert2Js").Include(
+                        "~/Content/js/SweetAlert2/sweetalert2.all.min.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+            bundles.Add(new ScriptBundle("~/bundles/TinyMceJs").Include(
+                        "~/Content/js/tinymce/tinymce.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+            bundles.Add(new ScriptBundle("~/bundles/bootstrapJs").Include(
+                      "~/Content/js/bootstrap/bootstrap.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/DataTableJs").Include(
+                      "~/Content/js/DataTable/datatables.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/AppJs").Include(
+                      "~/Content/js/app.js"));
+
+            bundles.Add(new StyleBundle("~/Content/BootstrapCss").Include(
+                      "~/Content/css/bootstrap/bootstrap.css"));
+
+            bundles.Add(new StyleBundle("~/Content/AppCss").Include(
+                      "~/Content/css/app.css"));
+
+            bundles.Add(new StyleBundle("~/Content/DataTablaCss").Include(
+                      "~/Content/css/DataTable/datatables.css"));
+
+            bundles.Add(new StyleBundle("~/Content/SweetAlert2Css").Include(
+                      "~/Content/css/SweetAlert2/sweetalert2.css"));
         }
     }
 }

@@ -40,6 +40,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,16 +50,70 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="contraseña.cs">
+      <DependentUpon>HomeWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HomeWork.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeWork.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HomeWork.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HomeWork.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeWork.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\UsuarioMetadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="recordatorio.cs">
+      <DependentUpon>HomeWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="simple.cs">
+      <DependentUpon>HomeWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tarea.cs">
+      <DependentUpon>HomeWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tipoUsuario.cs">
+      <DependentUpon>HomeWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TurnoMedico.cs">
+      <DependentUpon>HomeWork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usuario.cs">
+      <DependentUpon>HomeWork.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="HomeWork.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HomeWork.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="HomeWork.edmx.diagram">
+      <DependentUpon>HomeWork.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="HomeWork.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HomeWork.edmx</DependentUpon>
+      <LastGenOutput>HomeWork.Context.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
+    <Content Include="HomeWork.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HomeWork.edmx</DependentUpon>
+      <LastGenOutput>HomeWork.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
